@@ -5,13 +5,15 @@
 LedControl::LedControl(int pin, bool reversed) {
     this->pin = pin;
     this->reversed = reversed;
+
     #ifdef ESP32
       this->ledHal = new LedHalESP32(pin);
-      selfCreatedHal = true;
     #endif
     #ifdef ESP8266
       this->ledHal = new LedHalESP8266(pin);
     #endif
+
+    selfCreatedHal = true;
 };
 
 LedControl::LedControl(LedHal *hal) {
@@ -39,12 +41,12 @@ void LedControl::off() {
 void LedControl::blink(uint32_t peakDuty, uint32_t time, uint8_t step) {
   uint32_t singleStepTime = time / 2 / (peakDuty / step);
 
-  for(int duty = fullyOffDuty; duty < peakDuty; duty += step) {
+  for(uint8_t duty = fullyOffDuty; duty < peakDuty; duty += step) {
     ledHal->setDuty(calculateDuty(duty));
     delay(singleStepTime);
   }
 
-  for(int duty = peakDuty - 1; duty >= fullyOffDuty; duty -= step) {
+  for(uint8_t duty = peakDuty - 1; duty >= fullyOffDuty; duty -= step) {
     ledHal->setDuty(calculateDuty(duty));
     delay(singleStepTime);
   }
