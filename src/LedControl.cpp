@@ -41,12 +41,12 @@ void LedControl::off() {
 void LedControl::blink(uint32_t peakDuty, uint32_t time, uint8_t step) {
   uint32_t singleStepTime = time / 2 / (peakDuty / step);
 
-  for(uint8_t duty = fullyOffDuty; duty < peakDuty; duty += step) {
+  for(int32_t duty = fullyOffDuty; duty < peakDuty; duty += step) {
     ledHal->setDuty(calculateDuty(duty));
     delay(singleStepTime);
   }
 
-  for(uint8_t duty = peakDuty - 1; duty >= fullyOffDuty; duty -= step) {
+  for(int32_t duty = peakDuty - 1; duty >= fullyOffDuty; duty -= step) {
     ledHal->setDuty(calculateDuty(duty));
     delay(singleStepTime);
   }

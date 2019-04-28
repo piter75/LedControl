@@ -1,6 +1,6 @@
 {
     "name": "LedControl",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "keywords": "led, ledc",
     "description": "Arduino led control HAL. Supports ESP8266 and ESP32 devices at this moment.",
     "repository": {
